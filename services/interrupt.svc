@@ -5,9 +5,9 @@
 
 
 src:
-    - appstart/main.c
+    - interrupt/int.c
 
 hooks:
-    - void appstart (osjob_t*)
+    - void interrupt (void)
 
 # vim: syntax=yaml

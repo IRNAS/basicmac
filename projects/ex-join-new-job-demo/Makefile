@@ -17,7 +17,6 @@ SVCS += app
 
 DEFS += -DDEBUG_RX
 DEFS += -DDEBUG_TX
-DEFS += -DCFG_EXTI_IRQ_HANDLER=io_int_handler
 
 LMICCFG += eeprom_keys
 LMICCFG += DEBUG

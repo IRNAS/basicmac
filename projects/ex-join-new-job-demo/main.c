@@ -9,15 +9,10 @@
 static lwm_job lj;
 static osjob_t* mainjob;
 
+//new job added to the stack
 static osjob_t timer_job;
 static void next (osjob_t* job);
 
-void init_job_function (osjob_t* job);
-/*
-static void io_int_handler(void){
-		os_setCallback(&timer_job, init_job_function);
-}
-*/
 static void txc (void) {
     os_setApproxTimedCallback(mainjob, os_getTime() + sec2osticks(5), next);
 }
@@ -36,25 +31,21 @@ static void next (osjob_t* job) {
 
 void app_dl (int port, unsigned char* data, int dlen, unsigned int flags) {
     debug_printf("DL[%d]: %h\r\n", port, data, dlen);
-		debug_printf("test send time:\r\n");
+		debug_printf("app_dl:test send time:\r\n");
 }
 
-void init_job_function (osjob_t* job){
-		debug_printf("test_job_printf: %d \r\n", os_getTime());
-    //os_setTimedCallback(job, os_getTime() + sec2osticks(5), init_job_function);
+void repeat_job_function (osjob_t* job){
+		debug_printf("repeat_job_function:os_time_in_sec= %d \r\n", (int)(os_getTime() / OSTICKS_PER_SEC));
+    os_setTimedCallback(job, os_getTime() + sec2osticks(5), repeat_job_function);
 }
 
 void app_main (osjob_t* job) {
-    debug_printf("Hello World! test7\r\n");
+    debug_printf("app_main:Hello World! new job test\r\n");
 
-
-    //os_setTimedCallback(&timer_job, os_getTime() + sec2osticks(5), init_job_function);
-		//os_setCallback(&init_job, init_job_function);
-		debug_printf("test5.1\r\n");
-
-    // Application start hook
-    //SVCHOOK_test_job(job);
-
+		//set callback for repeat_job
+    os_setTimedCallback(&timer_job, os_getTime() + sec2osticks(5), repeat_job_function);
+		//os_setCallback(&timer_job, repeat_job_function);
+		debug_printf("app_main:test5.1\r\n");
 
     // join network
     lwm_setmode(LWM_MODE_NORMAL);
@@ -64,9 +55,5 @@ void app_main (osjob_t* job) {
 
     // initiate first uplink
     next(mainjob);
-}
-
-void app_int (void){
-	debug_printf("__interrupt: %d \r\n", os_getTime());
 }
 

@@ -38,6 +38,7 @@ static void initfunc (osjob_t* job) {
 
     // Application start hook
     SVCHOOK_appstart(job);
+
 }
 
 int main (void* bootarg) {

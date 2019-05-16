@@ -1,11 +1,9 @@
 hook.appstart: app_main
 hook.lwm_downlink: app_dl
-hook.interrupt: app_int
 
 require:
     - appstart
     - lwmux
     - lwtest
-    - interrupt
 
 # vim: syntax=yaml
