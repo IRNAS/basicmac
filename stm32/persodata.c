@@ -45,13 +45,21 @@ void pd_init (void) {
     } else { // TODO - check TrackNet legacy
         // fill defaults
         uint64_t eui;
+				uint64_t key;
 
-        eui = 0xffffffaa00000000ULL | hal_unique();
-        memcpy(pd.deveui, &eui, 8);
-        eui = 0xffffffbb00000000ULL;
-        memcpy(pd.joineui, &eui, 8);
-        memcpy(pd.nwkkey, "@ABCDEFGHIJKLMNO", 16);
-        memcpy(pd.appkey, "`abcdefghijklmno", 16);
+        //eui = 0xffffffaa00000000ULL | hal_unique();
+        //memcpy(pd.deveui, &eui, 8);
+				eui = 0xFFFFFFAA66B27E60ULL;
+				memcpy(pd.deveui, &eui, 8);
+        //eui = 0xffffffbb00000000ULL;
+        //memcpy(pd.joineui, &eui, 8);
+				eui = 0x70B3D57ED001C329ULL;
+				memcpy(pd.joineui, &eui, 16);
+        memcpy(pd.nwkkey, "@ABCDEFGHIJKLMNO", 8);
+        //memcpy(pd.appkey, "`abcdefghijklmno", 16);
+				key = 0xF14D4A39AB578B7123265C13C30719DDULL;
+				memcpy(pd.appkey, &key, 16);
+													 
     }
 }
 
