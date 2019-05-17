@@ -40,7 +40,29 @@ void repeat_job_function (osjob_t* job){
 }
 
 void app_main (osjob_t* job) {
-    debug_printf("app_main:Hello World! new job test\r\n");
+    debug_printf("app_main:Hello World!8 new job test\r\n");
+		
+		int i;
+		uint8_t *app_key_print = hal_appkey();
+		debug_printf("app key: ");
+		for(i = 0; i < 16; i++){
+			debug_printf("%02x ", (int)app_key_print[i]);
+		}
+		debug_printf("\r\n");//newline
+
+		uint8_t *app_eui_print = hal_joineui();
+		debug_printf("app eui (join eui): ");
+		for(i = 0; i < 8; i++){
+			debug_printf("%02x ", (int)app_eui_print[i]);
+		}
+		debug_printf("\r\n");//newline
+
+		uint8_t *dev_eui_print = hal_deveui();
+		debug_printf("dev eui: ");
+		for(i = 0; i < 8; i++){
+			debug_printf("%02x ", (int)dev_eui_print[i]);
+		}
+		debug_printf("\r\n");//newline
 
 		//set callback for repeat_job
     os_setTimedCallback(&timer_job, os_getTime() + sec2osticks(5), repeat_job_function);

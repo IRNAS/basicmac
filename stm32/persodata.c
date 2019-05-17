@@ -8,6 +8,11 @@
 
 #define PERSODATA_MAGIC_V1      0xb2dc4db2 /* openssl rand */
 
+/*LoRa device information*/
+#define APPLICATION_KEY 0xF14D4A39AB578B7123265C13C30719DD
+static uint8_t app_key[] = { 0xDD, 0x19, 0x07, 0xC3, 0x13, 0x5C, 0x26, 0x23, 0x71, 0x8B, 0x57, 0xAB, 0x39, 0x4A, 0x4D, 0xF1 }; //obrnut
+//static uint8_t app_key[] = { 0xF1, 0x4D, 0x4A, 0x39, 0xAB, 0x57, 0x8B, 0x71, 0x23, 0x26, 0x5C, 0x13, 0xC3, 0x07, 0x19, 0xDD }; //nije obrnut
+
 typedef struct {
     uint32_t    magic;          // 0x00 magic
     uint32_t    hwid;           // 0x04 hardware ID
@@ -45,7 +50,6 @@ void pd_init (void) {
     } else { // TODO - check TrackNet legacy
         // fill defaults
         uint64_t eui;
-				uint64_t key;
 
         //eui = 0xffffffaa00000000ULL | hal_unique();
         //memcpy(pd.deveui, &eui, 8);
@@ -54,11 +58,10 @@ void pd_init (void) {
         //eui = 0xffffffbb00000000ULL;
         //memcpy(pd.joineui, &eui, 8);
 				eui = 0x70B3D57ED001C329ULL;
-				memcpy(pd.joineui, &eui, 16);
-        memcpy(pd.nwkkey, "@ABCDEFGHIJKLMNO", 8);
+				memcpy(pd.joineui, &eui, 8);
+        //memcpy(pd.nwkkey, "@ABCDEFGHIJKLMNO", 16);
         //memcpy(pd.appkey, "`abcdefghijklmno", 16);
-				key = 0xF14D4A39AB578B7123265C13C30719DDULL;
-				memcpy(pd.appkey, &key, 16);
+				memcpy(pd.appkey, app_key, 16);
 													 
     }
 }
